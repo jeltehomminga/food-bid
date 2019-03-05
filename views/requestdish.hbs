@@ -1,12 +1,18 @@
-<form action="/requestdish" method="post" autocomplete="off">
-    <h1>Create a new dish request</h1>
-    <div class="form-group">
-        <label for="dish">dish</label>
-        <select class="form-control" name="dish" id="dish">
-            {{#each dishesFromDB}}
-            <option value="{{_id}}">{{name}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<div class="sign-form">
+    <form action="/requestdish" method="post" autocomplete="off">
+        <h2>Create a new dish request</h2>
+        <div class="form-group">
+            <label for="dish">dish</label>
+            <select class="form-control" name="dish" id="dish">
+                {{#each dishesFromDB}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="">Date:</label>
+            <input class="form-control" type="date" name="date" id="date">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

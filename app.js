@@ -21,18 +21,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('MY SECRET'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const signupRouter = require('./routes/signup');
 const signinRouter = require('./routes/signin');
+const authRouter = require('./routes/auth');
+const signoutRouter = require('./routes/signout');
 const requestDishRouter = require('./routes/requestdish');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
-app.use('/requestdish', requestDishRouter);
+app.use('/auth', authRouter);
+app.use('/auth/signout', signoutRouter);
+app.use('/auth/requestdish', requestDishRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
