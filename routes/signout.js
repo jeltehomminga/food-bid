@@ -5,7 +5,9 @@ router.get('/', (req, res, next)=> {
     debugger
     res.clearCookie("email");
     res.clearCookie("usertype");
-    res.redirect('/')
+    res.locals.user = undefined;
+    res.redirect('/');
+
 })
 
 module.exports = router;

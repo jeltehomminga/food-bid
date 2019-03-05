@@ -26,6 +26,7 @@ const usersRouter = require('./routes/users');
 const signupRouter = require('./routes/signup');
 const signinRouter = require('./routes/signin');
 const authRouter = require('./routes/auth');
+const profileRouter = require('./routes/profile');
 const signoutRouter = require('./routes/signout');
 const requestDishRouter = require('./routes/requestdish');
 
@@ -34,6 +35,7 @@ app.use('/users', usersRouter);
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/auth', authRouter);
+app.use('/auth/profile', profileRouter);
 app.use('/auth/signout', signoutRouter);
 app.use('/auth/requestdish', requestDishRouter);
 

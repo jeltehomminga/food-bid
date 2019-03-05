@@ -11,12 +11,12 @@ const bcryptSalt = 10;
 router.get('/:usertype', recaptcha.middleware.render, (req, res) => {
     
     const userType = req.params.usertype;
-    debugger
+
 
     const userTypeObject = {value: "",
     foodProvider: false,
     foodLover: false    };
-    debugger
+
 
     if (userType === "restaurant" || userType === "homechef" || userType === "foodprovider") {
         userTypeObject.value = "foodprovider"
@@ -29,24 +29,21 @@ router.get('/:usertype', recaptcha.middleware.render, (req, res) => {
     }
 
     debugger
-    req.signedCookies.email ? res.redirect('/profile') : res.render('signup', { captcha: res.recaptcha, userType: userTypeObject });
+    req.signedCookies.email ? res.redirect('/auth/profile') : res.render('signup', { captcha: res.recaptcha, userType: userTypeObject });
 }
 );
 
 router.post("/:usertype", (req, res, next) => {
     const userType = req.params.usertype;
-
     const email = req.body.email;
     const password = req.body.password;
-    debugger
-
 
     if (userType === "foodlover") {
         Foodlover.findOne({ "email": email })
 
         .then(result => {
-        debugger
         if (result) res.render("signup", { errorMessage: "The email already exists!" });
+
         else {
             const salt = bcrypt.genSaltSync(bcryptSalt);
             const hashPass = bcrypt.hashSync(password, salt);
@@ -57,7 +54,7 @@ router.post("/:usertype", (req, res, next) => {
                 .then(() => {
                     res.cookie('email', email, { signed: true });
                     res.cookie('usertype', 'foodlover', { signed: true });
-                    res.redirect("/auth/requestdish")
+                    res.redirect("/auth/profile")
                 })
                 .catch(error => console.log(error))
         }
@@ -68,10 +65,10 @@ router.post("/:usertype", (req, res, next) => {
         FoodProvider.findOne({ "email": email })
 
         .then(result => {
-        debugger
+
         if (result) res.render("signup", { errorMessage: "The email already exists!" });
         else {
-            debugger
+
             const salt = bcrypt.genSaltSync(bcryptSalt);
             const hashPass = bcrypt.hashSync(password, salt);
             FoodProvider.create({
@@ -81,18 +78,14 @@ router.post("/:usertype", (req, res, next) => {
                 .then(() => {
                     res.cookie('email', email, { signed: true });
                     res.cookie('usertype', 'foodprovider', { signed: true });
-                    debugger
-                    res.redirect("/auth/openrequests")
+                        res.redirect("/auth/profile")
                 })
                 .catch(error => console.log(error))
         }
     })
 
-
-
     }
-
-        
+       
 });
 
 module.exports = router;
