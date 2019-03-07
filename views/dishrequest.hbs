@@ -1,0 +1,32 @@
+
+<div class="sign-form">
+    {{#if foodLover}}
+    <form action="/auth/requestdish" method="get" autocomplete="off">
+    {{else}}
+    <form action="/auth/newbid/{{resultDish._id}}" method="get" autocomplete="off">
+    {{/if}}
+
+        <div class="list-group">
+            <h4 class="list-group-item list-group-item-action active">
+                {{#if foodLover}}
+                Accept a bid of {{resultDish.dish.name}}
+                {{else}}
+                All bids of {{resultDish.dish.name}}
+                {{/if}}
+            </h4>
+
+            {{#each bids}}
+            <a class="list-group-item list-group-item-action"><span
+                    class="space-between"><span>{{foodProvider.companyName}}</span> <span>{{dishRequest.dish.name}}</span><span>{{price}}</span><span>{{status}}</span></span></a>
+            {{/each}}
+
+        </div>
+        <h5>{{cookie}}</h5>
+        {{#if foodLover}}
+        <button type="submit" class="btn btn-primary">New request</button>
+        {{else}}
+        <button type="submit" class="btn btn-primary">Bid!</button>
+        {{/if}}
+
+    </form>
+</div>

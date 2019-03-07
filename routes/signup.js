@@ -9,9 +9,7 @@ const bcryptSalt = 10;
 
 
 router.get('/:usertype', recaptcha.middleware.render, (req, res) => {
-    
     const userType = req.params.usertype;
-
 
     const userTypeObject = {value: "",
     foodProvider: false,
@@ -28,7 +26,6 @@ router.get('/:usertype', recaptcha.middleware.render, (req, res) => {
         userTypeObject.foodLover = true; 
     }
 
-    debugger
     req.signedCookies.email ? res.redirect('/auth/profile') : res.render('signup', { captcha: res.recaptcha, userType: userTypeObject });
 }
 );

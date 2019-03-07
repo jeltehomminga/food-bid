@@ -1,0 +1,19 @@
+<div class="sign-form">
+    <form action="/auth/allrequests" method="get" autocomplete="off">
+        <div class="list-group">
+            <h4 class="list-group-item list-group-item-action active">
+                Who's your bids!?
+            </h4>
+            {{#if noResultText}}
+           <a class="list-group-item list-group-item-action"><span
+                    class="space-between">{{noResultText}}</span></a>
+            {{/if}}
+            {{#each bids}}
+            <a class="list-group-item list-group-item-action"><span
+                    class="space-between"><span>{{dishRequest.foodLover.firstName}}</span> <span>{{dishRequest.dish.name}}</span><span>{{price}}</span><span>{{status}}</span></span></a>
+            {{/each}}
+
+        </div>
+        <button type="submit" class="btn btn-primary">A bid more</button>
+    </form>
+</div>

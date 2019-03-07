@@ -6,10 +6,11 @@ const stringToObjectId = string => mongoose.Types.ObjectId(string);
 const dishRequestsSchema = new Schema({
     id: ObjectId,
     dish: { type: Schema.Types.ObjectId, ref: 'dishes', set: stringToObjectId },
-    foodlover: { type: Schema.Types.ObjectId, ref: 'foodlovers', set: stringToObjectId },
+    foodLover: { type: Schema.Types.ObjectId, ref: 'foodlovers', set: stringToObjectId },
     comment: String,
     delivery: String,
     requestTime: Date,
+    status: String,
 }, {
         timestamps: true
     });

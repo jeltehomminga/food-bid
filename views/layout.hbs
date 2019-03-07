@@ -25,16 +25,16 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ml-auto">
         <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="#">Features</a>
-        {{#unless cookie}}
+        {{#if user}}
+        <a class="nav-item nav-link" href="/auth/profile">Profile</a>
+        <a class="nav-item nav-link" href="/auth/mybids">My bids</a>
+        <a class="nav-item nav-link" href="/auth/myrequests">My Requests</a>
+        <a class="nav-item nav-link" href="/auth/signout">Logout</a>
+        {{else}}
         <a class="nav-item nav-link" href="/signup/foodprovider">Restaurant or home chef</a>
         <a class="nav-item nav-link" href="/signup/foodlover">Foodlover</a>
         <a class="nav-item nav-link" href="/signin">Login</a>
-        {{else}}
-        <a class="nav-item nav-link" href="/auth/profile">Profile</a>
-        <a class="nav-item nav-link" href="/auth/myrequests">My Requests</a>
-        <a class="nav-item nav-link" href="/auth/signout">Logout</a>
-        {{/unless}}
+        {{/if}}
       </div>
     </div>
   </nav>

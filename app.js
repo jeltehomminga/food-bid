@@ -6,7 +6,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const FoodProvider = require('./models/foodprovider');
+const Foodlover = require('./models/foodlover');
 
+app.locals.moment = require('moment');
 
 mongoose.connect('mongodb://localhost/Food-eureka', { useNewUrlParser: true }, err => err ? console.log(err) : console.log('connected'));
 
@@ -28,7 +31,10 @@ const signinRouter = require('./routes/signin');
 const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
 const signoutRouter = require('./routes/signout');
-const requestDishRouter = require('./routes/requestdish');
+const allrequestsRouter = require('./routes/allrequests');
+const dishRequestRouter = require('./routes/dishrequest');
+const newBidRouter = require('./routes/newbid');
+const myBidsRouter = require('./routes/mybids');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -37,7 +43,38 @@ app.use('/signin', signinRouter);
 app.use('/auth', authRouter);
 app.use('/auth/profile', profileRouter);
 app.use('/auth/signout', signoutRouter);
-app.use('/auth/requestdish', requestDishRouter);
+app.use('/auth/allrequests', allrequestsRouter);
+app.use('/auth/requestdish',  require('./routes/requestdish'));
+app.use('/auth/myrequests', require('./routes/myrequests'));
+app.use('/auth/dishrequest', dishRequestRouter);
+app.use('/auth/newbid', newBidRouter);
+app.use('/auth/mybids', myBidsRouter);
+
+
+
+app.get('/*', (req, res, next) => {
+    if (req.signedCookies.usertype === "foodlover") {
+        Foodlover.findOne({ email: req.signedCookies.email })
+            .then(result => {
+                res.locals.user = result;
+                res.locals.foodLover = true;
+                next()
+            })
+            .catch(console.error())
+    } else if (req.signedCookies.usertype === "foodprovider") {
+        FoodProvider.findOne({ email: req.signedCookies.email })
+            .then(result => {
+                res.locals.user = result;
+                res.locals.FoodProvider = true;
+                next()
+            })
+            .catch(console.error())
+    } else {
+      next()
+    }
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,6 +92,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, () => console.log('eten? ja, ik luister!') );
+// app.listen(3000, () => console.log('eten? ja, ik luister!') );
 
 module.exports = app;

@@ -1,0 +1,19 @@
+<div class="sign-form">
+
+    <form  action="/auth/newbid/{{dishRequestId}}/{{foodProviderId}}" method="post" autocomplete="off">
+        <h2>A bid more</h2>
+        <div class="form-group">
+
+
+            <div class="input-group">
+
+                <label class="sr-only" for="">Price</label>
+                <div class="input-group-addon">EUR</div>
+                <input class="form-control" type="number" min="0.00" step="0.05" value="1.00" name="price"
+                    id="bidprice" placeholder="bidprice">
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
