@@ -88,3 +88,17 @@ h1 {
 .form-group {
   margin-bottom: 10px;
 }
+
+.span-mybids-35pct {
+  width: 35%;
+  text-align: left;
+}
+
+.span-mybids-50pct {
+  width: 50%;
+  text-align: left;
+}
+
+.flex {
+  display: flex;
+}

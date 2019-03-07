@@ -5,12 +5,12 @@
                 Who's your bids!?
             </h4>
             {{#if noResultText}}
-           <a class="list-group-item list-group-item-action"><span
-                    class="space-between">{{noResultText}}</span></a>
+            <a class="list-group-item list-group-item-action"><span class="space-between">{{noResultText}}</span></a>
             {{/if}}
             {{#each bids}}
-            <a class="list-group-item list-group-item-action"><span
-                    class="space-between"><span>{{dishRequest.foodLover.firstName}}</span> <span>{{dishRequest.dish.name}}</span><span>{{price}}</span><span>{{status}}</span></span></a>
+            <a class="list-group-item list-group-item-action "><span class="space-between"><span
+                        class="span-mybids-35pct">{{dishRequest.foodLover.firstName}}</span> <span
+                        class="span-mybids-35pct">{{dishRequest.dish.name}}</span><span>{{price}}</span><span>{{status}}</span></span></a>
             {{/each}}
 
         </div>

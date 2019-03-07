@@ -8,10 +8,29 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const FoodProvider = require('./models/foodprovider');
 const Foodlover = require('./models/foodlover');
-
 app.locals.moment = require('moment');
 
 mongoose.connect('mongodb://localhost/Food-eureka', { useNewUrlParser: true }, err => err ? console.log(err) : console.log('connected'));
+
+const setResLocalUser = (req, res, next) => {
+  if (req.signedCookies.usertype === "foodlover") {
+      Foodlover.findOne({ email: req.signedCookies.email })
+          .then(result => {
+              res.locals.user = result;
+              res.locals.user.foodLover = true;
+              next()
+          })
+          .catch(console.error())
+  } else if (req.signedCookies.usertype === "foodprovider") {
+      FoodProvider.findOne({ email: req.signedCookies.email })
+          .then(result => {
+              res.locals.user = result;
+              res.locals.user.foodProvider = true;
+              next()
+          })
+          .catch(console.error());
+  } else next()
+}
 
 
 // view engine setup
@@ -23,58 +42,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('MY SECRET'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(setResLocalUser);
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const signupRouter = require('./routes/signup');
-const signinRouter = require('./routes/signin');
-const authRouter = require('./routes/auth');
-const profileRouter = require('./routes/profile');
-const signoutRouter = require('./routes/signout');
-const allrequestsRouter = require('./routes/allrequests');
-const dishRequestRouter = require('./routes/dishrequest');
-const newBidRouter = require('./routes/newbid');
-const myBidsRouter = require('./routes/mybids');
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/signup', signupRouter);
-app.use('/signin', signinRouter);
-app.use('/auth', authRouter);
-app.use('/auth/profile', profileRouter);
-app.use('/auth/signout', signoutRouter);
-app.use('/auth/allrequests', allrequestsRouter);
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/signup', require('./routes/signup'));
+app.use('/signin', require('./routes/signin'));
+app.use('/auth', require('./routes/auth'));
+app.use('/auth/profile', require('./routes/profile'));
+app.use('/auth/signout', require('./routes/signout'));
+app.use('/auth/allrequests', require('./routes/allrequests'));
 app.use('/auth/requestdish',  require('./routes/requestdish'));
 app.use('/auth/myrequests', require('./routes/myrequests'));
-app.use('/auth/dishrequest', dishRequestRouter);
-app.use('/auth/newbid', newBidRouter);
-app.use('/auth/mybids', myBidsRouter);
-
-
-
-app.get('/*', (req, res, next) => {
-    if (req.signedCookies.usertype === "foodlover") {
-        Foodlover.findOne({ email: req.signedCookies.email })
-            .then(result => {
-                res.locals.user = result;
-                res.locals.foodLover = true;
-                next()
-            })
-            .catch(console.error())
-    } else if (req.signedCookies.usertype === "foodprovider") {
-        FoodProvider.findOne({ email: req.signedCookies.email })
-            .then(result => {
-                res.locals.user = result;
-                res.locals.FoodProvider = true;
-                next()
-            })
-            .catch(console.error())
-    } else {
-      next()
-    }
-});
-
-
+app.use('/auth/dishrequest', require('./routes/dishrequest'));
+app.use('/auth/newbid', require('./routes/newbid'));
+app.use('/auth/mybids', require('./routes/mybids'));
+app.use('/auth/order', require('./routes/order'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -91,7 +74,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// app.listen(3000, () => console.log('eten? ja, ik luister!') );
 
 module.exports = app;

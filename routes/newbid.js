@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Foodlover = require("../models/foodlover");
-const Dish = require('../models/dish');
-const DishRequest = require('../models/dishrequest');
 const Bid = require('../models/bid')
 
 router.get('/:dishrequest', (req,res,next) => {
