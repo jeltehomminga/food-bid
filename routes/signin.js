@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Recaptcha = require('express-recaptcha').Recaptcha;
-const recaptcha = new Recaptcha('6LeVxJMUAAAAAI5LrJLvOMnQ3gwjC7R3sb6km13O', '6LeVxJMUAAAAAEsqhZlOlpROHyjZoyW17iUZpmM3');
+const recaptcha = new Recaptcha(process.env.RECAPTCHA_SITE_KEY, process.env.RECAPTCHA_SECRET_KEY);
 const Foodlover = require("../models/foodlover");
 const FoodProvider = require('../models/foodprovider');
 const bcrypt = require("bcrypt");

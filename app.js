@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+require('dotenv').config()
 const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -10,7 +11,8 @@ const FoodProvider = require('./models/foodprovider');
 const Foodlover = require('./models/foodlover');
 app.locals.moment = require('moment');
 
-mongoose.connect('mongodb://localhost/Food-eureka', { useNewUrlParser: true }, err => err ? console.log(err) : console.log('connected'));
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, err => err ? console.log(err) : console.log('connected'));
 
 const setResLocalUser = (req, res, next) => {
   if (req.signedCookies.usertype === "foodlover") {
@@ -40,7 +42,7 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('MY SECRET'));
+app.use(cookieParser(process.env.COOKIE_PARSER_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(setResLocalUser);
 
