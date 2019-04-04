@@ -1,20 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Foodlover = require("../models/foodlover");
 const Dish = require('../models/dish');
 const DishRequest = require('../models/dishrequest');
 
 const getToday = (req, res, next) => {
     let today = new Date();
     let dd = today.getDate();
-    let mm = today.getMonth() + 1; //January is 0!
+    let mm = today.getMonth() + 1; 
     let yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
     today = yyyy + '-' + mm + '-' + dd ;
     req.today = today;
     next(); 

@@ -1,16 +1,17 @@
-<form class="sign-form" method="POST" action="/auth/order">
+<form class="sign-form" action="/auth/order/{{dishRequest._id}}/{{bid.foodProvider._id}}/{{bid._id}}/{{dishRequest.dish._id}}" method="POST">
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Your order</h5>
       <p class="card-text">Only one step away from gettin your food!</p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item flex"><span class="span-mybids-50pct">Price</span> <span value="{{bid._id}}">{{bid.price}}</span></li>
+      <li class="list-group-item flex"><span class="span-mybids-50pct">Price</span> <span
+          value="{{bid._id}}">{{bid.price}}</span></li>
       <li class="list-group-item flex"><span class="span-mybids-50pct">Restaurant</span>
         <span value="{{bid.foodProvider._id}}">{{bid.foodProvider.companyName}}</span></li>
       <li class="list-group-item flex"><span class="span-mybids-50pct">Dish</span>
         <span value="{{dishRequest.dish._id}}">{{dishRequest.dish.name}}</span></li>
-              <li class="list-group-item flex"><span class="span-mybids-50pct">Delivery</span>
+      <li class="list-group-item flex"><span class="span-mybids-50pct">Delivery</span>
         <span value="{{dishRequest._id}}" type="date">{{dishRequest.requestTimeNew}}</span></li>
     </ul>
 

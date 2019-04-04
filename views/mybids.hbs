@@ -8,7 +8,7 @@
             <a class="list-group-item list-group-item-action"><span class="space-between">{{noResultText}}</span></a>
             {{/if}}
             {{#each bids}}
-            <a class="list-group-item list-group-item-action "><span class="space-between"><span
+            <a class="list-group-item list-group-item-action {{succesClass}}"><span class="space-between"><span
                         class="span-mybids-35pct">{{dishRequest.foodLover.firstName}}</span> <span
                         class="span-mybids-35pct">{{dishRequest.dish.name}}</span><span>{{price}}</span><span>{{status}}</span></span></a>
             {{/each}}
