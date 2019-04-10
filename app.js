@@ -12,7 +12,7 @@ const Foodlover = require('./models/foodlover');
 app.locals.moment = require('moment');
 
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, err => err ? console.log(err) : console.log('connected'));
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, err => err ? console.log(err) : console.log('MongoDB connected'));
 
 const setResLocalUser = (req, res, next) => {
   if (req.signedCookies.usertype === "foodlover") {
